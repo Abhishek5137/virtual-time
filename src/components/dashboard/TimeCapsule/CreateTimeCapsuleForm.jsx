@@ -122,6 +122,7 @@ const handleModalOpen = () => {
               className=" right-0 h-6 w-6  text-red-500 bg-slate-300 hover:bg-slate-700 rounded-full"
             >
               X
+              
             </button>
             </div>
         <h2 className="text-2xl font-bold mb-4">Create Time Capsule</h2>
