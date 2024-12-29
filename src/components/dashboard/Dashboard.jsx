@@ -7,9 +7,10 @@ import EditTimeCapsuleForm from './TimeCapsule/EditTimeCapsuleForm';
 import CreateMemory from './MemorySection/CreateMemory'
 import EditMemory from './MemorySection/EditMemory';
 import MemoryList from './MemorySection/MemoryList';
-import Navbar from '../Navbar/Navbar';
+
 import Card from '../Card';
 import CardContainer from './CardContainer';
+import NavbarLogout from '../Navbar/NavbarLogout';
 
 
 const Dashboard = () => {
@@ -27,7 +28,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Navbar auth="logout" />
+      <NavbarLogout />
       <div>
         <div className="  flex h-screen  bg-slate-50 md:w-full lg:w-full xl:w-full mx-auto p-4">
           {/* Aside or Sidebar */}

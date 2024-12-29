@@ -23,7 +23,7 @@ export const registerUser = asyncHandler(async (req, res, next) => {
         if (existingUser) {
             return next(new ApiError(400, 'Email or username already exists'));
         }
-    const hashedPassword = bcryptjs.hashSync(password, 10);
+        const hashedPassword = bcryptjs.hashSync(password, 10);
 
         const newUser = new User({
             username: username.toLowerCase(),
@@ -33,9 +33,9 @@ export const registerUser = asyncHandler(async (req, res, next) => {
 
         await newUser.save();
 
-        res.json(new ApiResponse('Signup successful', {newUser}));
+        res.json(new ApiResponse('Signup successful', { newUser }));
     } catch (error) {
-       throw new ApiError(500, 'Error occurred while registering user');
+        throw new ApiError(500, 'Error occurred while registering user');
     }
 });
 
@@ -56,32 +56,32 @@ export const loginUser = asyncHandler(async (req, res, next) => {
         const isPasswordValid = bcryptjs.compareSync(password, user.password);
 
         if (!isPasswordValid) {
-          throw new ApiError(401, 'Invalid password');
+            throw new ApiError(401, 'Invalid password');
         }
         const token = jwt.sign(
-            { id: user._id, email: user.email},
+            { id: user._id, email: user.email },
             process.env.JWT_SECRET
-          );
-          const { password: pass, ...rest } = user._doc;
+        );
+        const { password: pass, ...rest } = user._doc;
 
-                res
-                .status(200)
-                .cookie('access_token', token,
-                 {
-                  httpOnly: true,
+        res
+            .status(200)
+            .cookie('access_token', token,
+                {
+                    httpOnly: true,
                 })
-                .json(new ApiResponse('Login successful', { user: rest }));
+            .json(new ApiResponse('Login successful', { user: rest }));
 
     } catch (error) {
-      throw new ApiError(500, 'Error occurred while logging in user');
+        throw new ApiError(500, 'Error occurred while logging in user');
     }
 });
 
 export const logoutUser = asyncHandler(async (req, res, next) => {
     res
-    .status(200)
-    .clearCookie('access_token')
-    .json(new ApiResponse('Logged out', null));
+        .status(200)
+        .clearCookie('access_token')
+        .json(new ApiResponse('Logged out', null));
 });
 
 export const deleteUser = asyncHandler(async (req, res, next) => {
@@ -89,11 +89,11 @@ export const deleteUser = asyncHandler(async (req, res, next) => {
     const token = req.cookies.access_token;
 
     if (!token) {
-    throw new ApiError(401, 'Unauthorized: User must be logged in');
+        throw new ApiError(401, 'Unauthorized: User must be logged in');
     }
 
     try {
-        
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         const userEmailFromToken = decoded.email;
@@ -177,7 +177,7 @@ export const updateUser = asyncHandler(async (req, res, next) => {
         // Save the updated user object
         await user.save();
 
-        res.json(new ApiResponse('User updated', { user}));
+        res.json(new ApiResponse('User updated', { user }));
     } catch (error) {
         if (error instanceof jwt.JsonWebTokenError) {
             return next(new ApiError(401, 'Unauthorized: Invalid or expired token'));
@@ -188,5 +188,4 @@ export const updateUser = asyncHandler(async (req, res, next) => {
 
 
 
-        
-       
+
